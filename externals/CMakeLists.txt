@@ -1,0 +1,7 @@
+add_subdirectory(boost)
+add_subdirectory(eigen)
+add_subdirectory(xercesc)
+add_subdirectory(pythia8)
+add_subdirectory(tbb)
+add_subdirectory(geant4)
+add_subdirectory(root)
