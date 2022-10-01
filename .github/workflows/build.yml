@@ -27,7 +27,7 @@ jobs:
 
       # Prepare 
       - name: Installion
-        run: apt-get -y install cmake clang       
+        run: sudo apt-get -y install cmake clang       
 
       # Run the opt build
       - name: Build opt
