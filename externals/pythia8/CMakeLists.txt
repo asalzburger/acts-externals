@@ -8,7 +8,7 @@ ExternalProject_Add(
   pythia8
   URL ${Pythia8_URL}
   CONFIGURE_COMMAND ./configure --prefix=${CMAKE_INSTALL_PREFIX}/pythia8 
-  BUILD_COMMAND make 
-  INSTALL_COMMAND make install
+  BUILD_COMMAND ${MAKE} 
+  INSTALL_COMMAND ${MAKE} install
   BUILD_IN_SOURCE True
 )
