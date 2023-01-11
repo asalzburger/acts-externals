@@ -35,8 +35,8 @@ jobs:
           cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang
           sudo cmake --build build_opt -j4 --target install
   
-    # Upload the output of the job as artifacts
-    artifacts:
-      paths:
-        - /opt/hep
-      expire_in: 1 week
+      # Upload the output of the job as artifacts
+      artifacts:
+        paths:
+          - /opt/hep
+        expire_in: 1 week
