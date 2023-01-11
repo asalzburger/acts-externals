@@ -9,7 +9,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # External dependency version
 set(_acts_eigen3_version 3.3.7)
-set(_acts_xercesc_version 3.2.3)
+set(_acts_xercesc_version 3.2.4)
 set(_acts_boost_version 1.80.0)
 set(_acts_geant4_version v11.0.3)
 set(_acts_tbb_version v2021.6.0)
