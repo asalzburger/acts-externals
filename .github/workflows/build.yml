@@ -33,7 +33,7 @@ jobs:
       - name: Build opt
         run: |
           cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang
-          sudo cmake --build build_opt -j4 --target install
+          sudo cmake --build build_opt --target install
 
       # Upload the artifacts
       - name: Archive artifacts
