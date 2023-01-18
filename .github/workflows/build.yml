@@ -29,11 +29,20 @@ jobs:
       - name: Installion
         run: sudo apt-get -y install cmake clang       
 
-      # Run the opt build
-      - name: Build opt
+      # Run the base build
+      - name: Build base dependencies
         run: |
-          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang
-          sudo cmake --build build_opt --target install
+          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=On
+
+      # Run the Geant4 build
+      - name: Build Geant4
+        run: |
+          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=Off -DBUILD_GEANT4=On
+
+      # Run the ROOT Build
+      - name: Build ROOT
+        run: |
+          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=Off -DBUILD_GEANT4=Off -DBUILD_ROOT=On
 
       # Upload the artifacts
       - name: Archive artifacts
