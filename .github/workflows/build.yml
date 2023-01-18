@@ -32,17 +32,17 @@ jobs:
       # Run the base build
       - name: Build base dependencies
         run: |
-          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=On
+          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=On && cmake --build build_opt
 
       # Run the Geant4 build
       - name: Build Geant4
         run: |
-          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=Off -DBUILD_GEANT4=On
+          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=Off -DBUILD_GEANT4=On && cmake --build build_opt
 
       # Run the ROOT Build
       - name: Build ROOT
         run: |
-          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=Off -DBUILD_GEANT4=Off -DBUILD_ROOT=On
+          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=Off -DBUILD_GEANT4=Off -DBUILD_ROOT=On && cmake --build build_opt
 
       # Upload the artifacts
       - name: Archive artifacts
