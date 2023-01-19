@@ -33,7 +33,10 @@ jobs:
       - name: Check for cache to be restored
         id: base-cache
         uses: actions/cache@v3
+        env:
+          cache-name: cache-base-deps
         with:
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
           path: |
             /opt/hep
       
