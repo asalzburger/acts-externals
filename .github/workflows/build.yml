@@ -32,8 +32,7 @@ jobs:
       # Run versioning command
       - name: Create cache version Check
         run: |
-          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DVERSIONING=On && export BASE_DEPS=`cat /opt/hep/versioning/base-deps.versions` && echo ${BASE_DEPS}
-
+          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DVERSIONING=On && echo "base_deps=`cat /opt/hep/versioning/base-deps.versions`" >> $GITHUB_ENV
       # Check if there is a Cache available
       - name: Check for base cache
         id: cache-base
@@ -41,8 +40,8 @@ jobs:
         env:
           cache-name: base-deps
         with:
-          key: ${{ runner.os }}-${{ env.cache-name }}
-          restore-keys: ${{ runner.os }}-${{ env.cache-name }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ env.base_deps }}
+          restore-keys: ${{ runner.os }}-${{ env.cache-name }}-${{ env.base_deps }}
           path: |
             /opt/hep/boost
             /opt/hep/eigen
