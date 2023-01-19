@@ -30,7 +30,7 @@ jobs:
         run: sudo apt-get -y install cmake clang       
 
       # Run versioning command
-      - name: Create cache version Check
+      - name: Create cache version check
         run: |
           cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DVERSIONING=On && echo "base_deps=`cat /opt/hep/versioning/base-deps.versions`" >> $GITHUB_ENV
       # Check if there is a Cache available
