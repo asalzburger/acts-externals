@@ -29,9 +29,9 @@ message(STATUS "Creating target directory: $ENV{TARGET_DIR}")
 file(MAKE_DIRECTORY $ENV{TARGET_DIR})
 
 # Some specifications
-set(_acts_geant4_data Off)
+set(_acts_geant4_data On)
 
 # Threads
-set(_acts_build_threads 6)
+set(_acts_build_threads 4)
 
 add_subdirectory(externals)
