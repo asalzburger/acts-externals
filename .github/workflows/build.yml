@@ -29,6 +29,13 @@ jobs:
       - name: Installion
         run: sudo apt-get -y install cmake clang       
 
+      # Check if there is a Cache available
+      - name: Check for cache to be restored
+        uses: actions/cache@v3
+        with:
+        path: |
+          /opt/hep
+      
       # Run the base build
       - name: Build base dependencies
         run: |
