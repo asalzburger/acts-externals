@@ -31,10 +31,11 @@ jobs:
 
       # Check if there is a Cache available
       - name: Check for cache to be restored
+        id: base-cache
         uses: actions/cache@v3
         with:
-        path: |
-          /opt/hep
+          path: |
+            /opt/hep
       
       # Run the base build
       - name: Build base dependencies
