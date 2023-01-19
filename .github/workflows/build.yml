@@ -34,9 +34,10 @@ jobs:
         id: base-cache
         uses: actions/cache@v3
         env:
-          cache-name: cache-base-deps
+          cache-name: base-deps
         with:
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          key: ${{ runner.os }}-${{ env.cache-name }}
+          restore-keys: ${{ runner.os }}-${{ env.cache-name }}
           path: |
             /opt/hep
       
