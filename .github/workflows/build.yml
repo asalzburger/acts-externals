@@ -42,7 +42,7 @@ jobs:
             /opt/hep
       
       # Run the base build
-      - if: ${{ steps.cache-base.outputs.cache-hit != 'true' }}
+      - if: ${{ steps.cache-base.outputs.cache-hit == 'true' }}
         name: Build base dependencies
         continue-on-error: true
         run: |
