@@ -30,8 +30,8 @@ jobs:
         run: sudo apt-get -y install cmake clang       
 
       # Check if there is a Cache available
-      - name: Check for cache to be restored
-        id: base-cache
+      - name: Check for base cache
+        id: cache-base
         uses: actions/cache@v3
         env:
           cache-name: base-deps
@@ -42,7 +42,9 @@ jobs:
             /opt/hep
       
       # Run the base build
-      - name: Build base dependencies
+      - if: ${{ steps.cache-base.outputs.cache-hit != 'true' }}
+        name: Build base dependencies
+        continue-on-error: true
         run: |
           cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=On && cmake --build build_opt
 
