@@ -29,6 +29,11 @@ jobs:
       - name: Installion
         run: sudo apt-get -y install cmake clang       
 
+      # Run versioning command
+      - name: Create cache version Check
+        run: |
+          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DVERSIONING=On && cat /opt/hep/versioning/base-deps.versions 
+
       # Check if there is a Cache available
       - name: Check for base cache
         id: cache-base
@@ -39,14 +44,18 @@ jobs:
           key: ${{ runner.os }}-${{ env.cache-name }}
           restore-keys: ${{ runner.os }}-${{ env.cache-name }}
           path: |
-            /opt/hep
-      
+            /opt/hep/boost
+            /opt/hep/eigen
+            /opt/hep/pythia8
+            /opt/hep/tbb
+            /opt/hep/xercesc
+
       # Run the base build
       - if: ${{ steps.cache-base.outputs.cache-hit == 'true' }}
         name: Build base dependencies
         continue-on-error: true
         run: |
-          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=On && cmake --build build_opt
+          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DVERSIONING=Off -DBUILD_BASE=On && cmake --build build_opt
 
       # Run the Geant4 build
       #- name: Build Geant4
