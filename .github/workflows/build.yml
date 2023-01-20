@@ -58,7 +58,8 @@ jobs:
         name: Build base dependencies
         continue-on-error: true
         run: |
-          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DVERSIONING=Off -DBUILD_BASE=On && cmake --build build_opt
+          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DVERSIONING=Off -DBUILD_BASE=On
+          cmake --build build_opt
 
       # Check if there is a Cache available
       - name: Check for Geant4 cache
@@ -77,7 +78,8 @@ jobs:
         name: Build Geant4
         continue-on-error: true        
         run: |
-          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=Off -DBUILD_GEANT4=On && cmake --build build_opt
+          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DVERSIONING=Off -DBUILD_BASE=Off -DBUILD_GEANT4=On
+          cmake --build build_opt
 
       # Run the ROOT Build
       #- name: Build ROOT
