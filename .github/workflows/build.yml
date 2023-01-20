@@ -32,10 +32,10 @@ jobs:
 
       # Prepare : macOS
       - name: Installion macOS
-        run: brew install cmake clang       
-        if : | 
-          runner.os == 'macOS'
+        run: | 
+          brew install cmake clang       
           sudo mkdir /opt/hep
+        if : runner.os == 'macOS'
 
       # Run versioning command
       - name: Create cache version check
