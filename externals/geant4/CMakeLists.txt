@@ -6,6 +6,8 @@ set(GEANT4_URL "https://github.com/Geant4/geant4/archive/refs/tags/${_acts_geant
 set(GEANT4_SRC_DIR ${CMAKE_CURRENT_BINARY_DIR}/geant4-prefix/src/geant4)
 set(GEANT4_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/geant4-prefix/src/geant4-build)
 
+set(CMAKE_POLICY_DEFAULT_CMP0135 NEW)
+
 set(LIB_SUFFIX "so")
 if(APPLE)
   set(LIB_SUFFIX "dylib")
