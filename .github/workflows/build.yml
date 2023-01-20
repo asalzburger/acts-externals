@@ -33,7 +33,7 @@ jobs:
       # Prepare : macOS
       - name: Installion macOS
         run: | 
-          brew install cmake clang       
+          brew install cmake       
           sudo mkdir /opt/hep
           sudo chown -Rf `whoami` /opt/hep
         if : runner.os == 'macOS'
@@ -91,11 +91,26 @@ jobs:
           cmake --build build_opt
           cat /home/runner/work/acts-externals/acts-externals/build_opt/externals/geant4/geant4-prefix/src/geant4-build/CMakeFiles/CMakeOutput.log
 
-      # Run the ROOT Build
-      #- name: Build ROOT
-      #  run: |
-      #    cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=Off -DBUILD_GEANT4=Off -DBUILD_ROOT=On && cmake --build build_opt
+      # Check if there is a Cache available
+      - name: Check for ROOT cache
+        id: cache-root
+        uses: actions/cache@v3
+        env:
+          cache-name: root
+        with:
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ env.root_version }}
+          restore-keys: ${{ runner.os }}-${{ env.cache-name }}-${{ env.root_version }}
+          path: |
+            /opt/hep/root
 
+      # Run the ROOT build
+      - if: ${{ steps.cache-root.outputs.cache-hit != 'true' }}
+        name: Build ROOT
+        continue-on-error: true        
+        run: |
+          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DVERSIONING=Off -DBUILD_BASE=Off -DBUILD_GEANT4=Off -DBUILD_ROOT=On
+          cmake --build build_opt
+          
       # Upload the artifacts
       # - name: Archive artifacts
       #   uses: actions/upload-artifact@v3
