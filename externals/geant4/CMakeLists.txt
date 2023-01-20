@@ -2,11 +2,11 @@ message( STATUS "Building Geant4 ${_acts_geant4_version}" )
 
 include(ExternalProject)
 
+cmake_policy(SET CMP0135 NEW)
+
 set(GEANT4_URL "https://github.com/Geant4/geant4/archive/refs/tags/${_acts_geant4_version}.tar.gz")
 set(GEANT4_SRC_DIR ${CMAKE_CURRENT_BINARY_DIR}/geant4-prefix/src/geant4)
 set(GEANT4_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/geant4-prefix/src/geant4-build)
-
-set(CMAKE_POLICY_DEFAULT_CMP0135 NEW)
 
 set(LIB_SUFFIX "so")
 if(APPLE)

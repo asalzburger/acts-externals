@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.14)
 
-cmake_policy(SET CMP0135 NEW)
-
 project(acts-externals VERSION 0.0.0)
+
+cmake_policy(SET CMP0135 NEW)
 
 # must be set before project(...) call; version module is needed before
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
