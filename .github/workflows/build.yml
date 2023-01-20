@@ -32,7 +32,7 @@ jobs:
 
       # Prepare : macOS
       - name: Installion macOS
-        run: sudo brew install cmake clang       
+        run: brew install cmake clang       
         if : runner.os == 'macOS'
 
       # Run versioning command
