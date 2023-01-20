@@ -32,7 +32,11 @@ jobs:
       # Run versioning command
       - name: Create cache version check
         run: |
-          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DVERSIONING=On && echo "base_deps=`cat /opt/hep/versioning/base-deps.versions`" >> $GITHUB_ENV
+          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DVERSIONING=On 
+          echo "base_deps_version=`cat /opt/hep/versioning/base-deps.version`" >> $GITHUB_ENV
+          echo "geant4_version=`cat /opt/hep/versioning/geant4.version`" >> $GITHUB_ENV
+          echo "root_version=`cat /opt/hep/versioning/root.version`" >> $GITHUB_ENV
+      
       # Check if there is a Cache available
       - name: Check for base cache
         id: cache-base
@@ -40,8 +44,8 @@ jobs:
         env:
           cache-name: base-deps
         with:
-          key: ${{ runner.os }}-${{ env.cache-name }}-${{ env.base_deps }}
-          restore-keys: ${{ runner.os }}-${{ env.cache-name }}-${{ env.base_deps }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ env.base_deps_version }}
+          restore-keys: ${{ runner.os }}-${{ env.cache-name }}-${{ env.base_deps_version }}
           path: |
             /opt/hep/boost
             /opt/hep/eigen
@@ -56,10 +60,23 @@ jobs:
         run: |
           cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DVERSIONING=Off -DBUILD_BASE=On && cmake --build build_opt
 
+      # Check if there is a Cache available
+      - name: Check for Geant4 cache
+        id: cache-geant4
+        uses: actions/cache@v3
+        env:
+          cache-name: geant4
+        with:
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ env.geant4_version }}
+          restore-keys: ${{ runner.os }}-${{ env.cache-name }}-${{ env.geant4_version }}
+          path: |
+            /opt/hep/geant4
+
       # Run the Geant4 build
-      #- name: Build Geant4
-      #  run: |
-      #    cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=Off -DBUILD_GEANT4=On && cmake --build build_opt
+      - if: ${{ steps.cache-geant4.outputs.cache-hit != 'true' }}
+      - name: Build Geant4
+        run: |
+          cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=Off -DBUILD_GEANT4=On && cmake --build build_opt
 
       # Run the ROOT Build
       #- name: Build ROOT
@@ -67,9 +84,9 @@ jobs:
       #    cmake -S . -B build_opt -DCMAKE_INSTALL_PREFIX=/opt/hep -DCMAKE_CXX_COMPILER=clang -DCMAKE_C_COMPILER=clang -DBUILD_BASE=Off -DBUILD_GEANT4=Off -DBUILD_ROOT=On && cmake --build build_opt
 
       # Upload the artifacts
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: externals-opt
-          path: |
-            /opt/hep
+      # - name: Archive artifacts
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: externals-opt
+      #     path: |
+      #       /opt/hep
